@@ -1,0 +1,223 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label = "carrusel" } = Astro.props;
+---
+
+<div class="carousel" data-carousel aria-roledescription={label}>
+  <div class="carousel-viewport">
+    <div class="carousel-track">
+      <slot />
+    </div>
+  </div>
+
+  <button class="carousel-arrow prev" data-dir="-1" aria-label="Anterior">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+  <button class="carousel-arrow next" data-dir="1" aria-label="Siguiente">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <div class="carousel-dots"></div>
+</div>
+
+<script>
+  function initCarousel(carousel: HTMLElement) {
+    const track = carousel.querySelector<HTMLElement>('.carousel-track');
+    if (!track) return;
+
+    const slides = Array.from(track.querySelectorAll<HTMLElement>(':scope > .slide'));
+    const dotsWrap = carousel.querySelector<HTMLElement>('.carousel-dots');
+    const total = slides.length;
+    let index = 0;
+
+    if (total === 0) return;
+
+    if (total < 2) carousel.classList.add('single');
+
+    slides.forEach((slide, i) => {
+      slide.setAttribute('role', 'group');
+      slide.setAttribute('aria-roledescription', 'diapositiva');
+      slide.setAttribute('aria-label', `${i + 1} de ${total}`);
+    });
+
+    const dots = Array.from({ length: total }, (_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot';
+      dot.setAttribute('aria-label', `Ir a la diapositiva ${i + 1}`);
+      dot.addEventListener('click', () => go(i));
+      dotsWrap?.appendChild(dot);
+      return dot;
+    });
+
+    function go(i: number) {
+      index = ((i % total) + total) % total;
+      track!.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((d, di) => d.classList.toggle('active', di === index));
+      slides.forEach((s, si) => s.setAttribute('aria-hidden', String(si !== index)));
+    }
+
+    carousel.querySelectorAll<HTMLButtonElement>('.carousel-arrow').forEach((btn) => {
+      btn.addEventListener('click', () => go(index + Number(btn.dataset.dir)));
+    });
+
+    let startX = 0;
+    const viewport = carousel.querySelector<HTMLElement>('.carousel-viewport');
+
+    viewport?.addEventListener(
+      'touchstart',
+      (e) => {
+        startX = e.touches[0].clientX;
+      },
+      { passive: true }
+    );
+
+    viewport?.addEventListener(
+      'touchend',
+      (e) => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
+      },
+      { passive: true }
+    );
+
+    go(0);
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach(initCarousel);
+</script>
+
+<style>
+  .carousel {
+    position: relative;
+  }
+
+  .carousel-viewport {
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  /* Las diapositivas vienen del slot de quien usa el componente */
+  .carousel-track :global(.slide) {
+    flex: 0 0 100%;
+    min-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: white;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+    z-index: 2;
+  }
+
+  .carousel-arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .carousel-arrow:hover {
+    color: var(--color-accent-red);
+    border-color: var(--color-accent-red);
+  }
+
+  .carousel-arrow.prev {
+    left: -56px;
+  }
+
+  .carousel-arrow.next {
+    right: -56px;
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 2rem;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-border);
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      transform 0.2s;
+  }
+
+  .dot:hover {
+    background: #c0c0c0;
+  }
+
+  .dot.active {
+    background: var(--color-accent-red);
+    transform: scale(1.25);
+  }
+
+  .carousel.single :global(.carousel-arrow),
+  .carousel.single :global(.carousel-dots),
+  .carousel.single :global(.dot) {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-track {
+      transition: none;
+    }
+  }
+
+  /* Con poco margen lateral, las flechas vuelven hacia adentro */
+  @media (max-width: 1160px) {
+    .carousel-arrow.prev {
+      left: -12px;
+    }
+
+    .carousel-arrow.next {
+      right: -12px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .carousel-arrow {
+      width: 38px;
+      height: 38px;
+    }
+
+    .carousel-arrow.prev {
+      left: 4px;
+    }
+
+    .carousel-arrow.next {
+      right: 4px;
+    }
+  }
+</style>

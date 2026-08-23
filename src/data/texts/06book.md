@@ -9,4 +9,5 @@ meta:
     value: "En preparación"
   - label: "Fecha estimada"
     value: "2027"
+comingSoon: "Próximamente"
 ---

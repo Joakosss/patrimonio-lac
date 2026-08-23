@@ -1,35 +1,45 @@
 ---
+import Carousel from "./Carousel.astro";
+
 const text = await import("../data/texts/06book.md");
-const { title, authors, description, coverIcon, coverText, meta } =
+const { title, authors, description, coverIcon, coverText, meta, comingSoon } =
   text.frontmatter;
 ---
 
 <section id="publicaciones" class="book">
   <div class="book-container">
-    <div class="book-layout">
-      <div class="book-cover">
-        <div class="cover-placeholder">
-          <span class="cover-icon">{coverIcon}</span>
-          <span class="cover-text">{coverText}</span>
+    <Carousel label="carrusel de publicaciones">
+      <div class="slide">
+        <div class="book-layout">
+          <div class="book-cover">
+            <div class="cover-placeholder">
+              <span class="cover-icon">{coverIcon}</span>
+              <span class="cover-text">{coverText}</span>
+            </div>
+          </div>
+
+          <div class="book-info">
+            <h2 class="book-title">{title}</h2>
+            <p class="book-authors">{authors}</p>
+            <p class="book-description">{description}</p>
+            <div class="book-meta">
+              {
+                meta.map((item) => (
+                  <div class="meta-item">
+                    <span class="meta-label">{item.label}</span>
+                    <span class="meta-value">{item.value}</span>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="book-info">
-        <h2 class="book-title">{title}</h2>
-        <p class="book-authors">{authors}</p>
-        <p class="book-description">{description}</p>
-        <div class="book-meta">
-          {
-            meta.map((item) => (
-              <div class="meta-item">
-                <span class="meta-label">{item.label}</span>
-                <span class="meta-value">{item.value}</span>
-              </div>
-            ))
-          }
-        </div>
+      <div class="slide slide-soon">
+        <p class="soon-text">{comingSoon}</p>
       </div>
-    </div>
+    </Carousel>
   </div>
 </section>
 
@@ -44,6 +54,7 @@ const { title, authors, description, coverIcon, coverText, meta } =
     margin: 0 auto;
   }
 
+  /* Diapositiva 1: publicación */
   .book-layout {
     display: grid;
     grid-template-columns: 300px 1fr;
@@ -126,6 +137,33 @@ const { title, authors, description, coverIcon, coverText, meta } =
     color: var(--color-text);
   }
 
+  /* Diapositiva 2: próximamente */
+  .slide-soon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+  }
+
+  .soon-text {
+    font-size: clamp(3rem, 10vw, 6.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    text-align: center;
+    background: linear-gradient(
+      135deg,
+      var(--color-accent-red) 0%,
+      #b8121b 60%,
+      var(--color-accent-yellow) 130%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
   @media (max-width: 768px) {
     .book-layout {
       grid-template-columns: 1fr;
@@ -140,6 +178,10 @@ const { title, authors, description, coverIcon, coverText, meta } =
 
     .book-meta {
       justify-content: center;
+    }
+
+    .slide-soon {
+      padding: 3rem 1rem;
     }
   }
 </style>

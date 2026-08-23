@@ -1,6 +1,8 @@
 ---
 logo:
   text: "Taller de Patrimonio LAC"
+  shortText: "Patrimonio LAC"
+  image: "/logo.jpg"
 nav:
   - label: "Equipo"
     href: "#equipo"

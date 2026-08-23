@@ -6,7 +6,9 @@ const { logo, nav, instagram } = text.frontmatter;
 <header class="header" id="site-header">
   <nav class="nav" id="main-nav">
     <a href="/" class="logo">
-      <span class="logo-text">{logo.text}</span>
+      <img src={logo.image} alt={logo.text} width="40" height="40" class="logo-img" loading="eager" />
+      <span class="logo-text logo-text-full">{logo.text}</span>
+      <span class="logo-text logo-text-short">{logo.shortText}</span>
     </a>
     <button
       class="hamburger"
@@ -157,6 +159,18 @@ const { logo, nav, instagram } = text.frontmatter;
     z-index: 110;
   }
 
+  .logo-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .logo-text-short {
+    display: none;
+  }
+
   .nav-links {
     display: flex;
     list-style: none;
@@ -254,6 +268,14 @@ const { logo, nav, instagram } = text.frontmatter;
     .hamburger {
       display: flex;
       order: 4;
+    }
+
+    .logo-text-full {
+      display: none;
+    }
+
+    .logo-text-short {
+      display: inline;
     }
 
     .nav-instagram {
