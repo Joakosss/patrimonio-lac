@@ -9,6 +9,6 @@ cards:
     title: "Preservación"
     description: "Digitalizamos fotografías, actas y materiales históricos para que formen parte del patrimonio accesible de la comunidad."
   - icon: "✍️"
-    title: "Publicación"
-    description: "Elaboramos publicaciones y recursos que acercan la historia del liceo a toda la comunidad educativa."
+    title: "Difusión"
+    description: "Participamos en ferias, elaboramos publicaciones y recursos que acercan la historia del liceo a toda la comunidad educativa."
 ---

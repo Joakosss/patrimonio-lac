@@ -1,30 +1,35 @@
 ---
-import photos from '../data/photos.json';
+import photos from "../data/photos.json";
 
-const teamPhotos = photos.filter((p) => p.category === 'equipo');
+const teamPhotos = photos.filter((p) => p.category === "equipo");
 ---
 
 <section id="equipo" class="team">
   <div class="team-container">
     <h2 class="section-title">Nuestro Equipo</h2>
-    <p class="section-subtitle">Los estudiantes que investigan, digitalizan y preservan la memoria de nuestro liceo.</p>
+    <p class="section-subtitle">
+      Los estudiantes investigan, digitalizan y preservan la memoria de nuestro
+      liceo.
+    </p>
 
     <div class="team-grid">
-      {teamPhotos.map((photo) => (
-        <figure class="team-item" data-lightbox-team>
-          <img
-            src={photo.src}
-            alt={photo.alt}
-            loading="lazy"
-            width="600"
-            height="400"
-          />
-          <figcaption class="team-caption">
-            {photo.year && <span class="team-year">{photo.year}</span>}
-            <span class="team-title">{photo.title}</span>
-          </figcaption>
-        </figure>
-      ))}
+      {
+        teamPhotos.map((photo) => (
+          <figure class="team-item" data-lightbox-team>
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              loading="lazy"
+              width="600"
+              height="400"
+            />
+            <figcaption class="team-caption">
+              {photo.year && <span class="team-year">{photo.year}</span>}
+              <span class="team-title">{photo.title}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
     </div>
   </div>
 </section>
@@ -38,8 +43,8 @@ const teamPhotos = photos.filter((p) => p.category === 'equipo');
         if (!overlay) return;
         overlay.remove();
         overlay = null;
-        document.body.style.overflow = '';
-        window.removeEventListener('popstate', onPopstate);
+        document.body.style.overflow = "";
+        window.removeEventListener("popstate", onPopstate);
         if (!fromPopstate && history.state?.lightbox) {
           history.back();
         }
@@ -50,17 +55,17 @@ const teamPhotos = photos.filter((p) => p.category === 'equipo');
       }
 
       function onKeydown(e) {
-        if (e.key === 'Escape') closeLightbox();
+        if (e.key === "Escape") closeLightbox();
       }
 
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img');
+      item.addEventListener("click", () => {
+        const img = item.querySelector("img");
         if (!img) return;
 
-        history.pushState({ lightbox: true }, '');
+        history.pushState({ lightbox: true }, "");
 
-        overlay = document.createElement('div');
-        overlay.className = 'lightbox-overlay';
+        overlay = document.createElement("div");
+        overlay.className = "lightbox-overlay";
         overlay.innerHTML = `
           <div class="lightbox-content">
             <img src="${img.src}" alt="${img.alt}" />
@@ -69,21 +74,24 @@ const teamPhotos = photos.filter((p) => p.category === 'equipo');
         `;
 
         document.body.appendChild(overlay);
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
 
-        overlay.addEventListener('click', (e) => {
-          if (e.target === overlay || (e.target as Element).classList.contains('lightbox-close')) {
+        overlay.addEventListener("click", (e) => {
+          if (
+            e.target === overlay ||
+            (e.target as Element).classList.contains("lightbox-close")
+          ) {
             closeLightbox();
           }
         });
 
-        document.addEventListener('keydown', onKeydown);
-        window.addEventListener('popstate', onPopstate);
+        document.addEventListener("keydown", onKeydown);
+        window.addEventListener("popstate", onPopstate);
       });
     });
   }
 
-  initLightbox('[data-lightbox-team]');
+  initLightbox("[data-lightbox-team]");
 </script>
 
 <style>
@@ -124,7 +132,9 @@ const teamPhotos = photos.filter((p) => p.category === 'equipo');
     overflow: hidden;
     background: var(--color-bg);
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
   }
 
   .team-item:hover {
