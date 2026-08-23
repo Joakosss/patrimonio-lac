@@ -1,6 +1,8 @@
 ---
+import Carousel from "./Carousel.astro";
+
 const text = await import("../data/texts/04archive.md");
-const { title, description, ctaLabel, ctaHref, images } = text.frontmatter;
+const { title, description, images } = text.frontmatter;
 ---
 
 <section id="archivo" class="archive">
@@ -10,89 +12,30 @@ const { title, description, ctaLabel, ctaHref, images } = text.frontmatter;
       <p class="archive-description">{description}</p>
     </div>
 
-    <div class="archive-grid">
+    <Carousel label="carrusel del archivo">
       {
-        images.map((img) => (
-          <figure class="archive-item" data-lightbox>
-            <img
-              src={img.src}
-              alt={img.alt}
-              loading="lazy"
-              width="600"
-              height="400"
-            />
-          </figure>
+        images.map((img, i) => (
+          <div class="slide">
+            <figure class="archive-item">
+              <img
+                src={img.src}
+                alt={img.alt}
+                loading={i === 0 ? "eager" : "lazy"}
+                width="1200"
+                height="800"
+              />
+            </figure>
+          </div>
         ))
       }
-    </div>
+    </Carousel>
   </div>
 </section>
-
-<script>
-  function initLightbox(selector) {
-    document.querySelectorAll(selector).forEach((item) => {
-      let overlay = null;
-
-      function closeLightbox(fromPopstate = false) {
-        if (!overlay) return;
-        overlay.remove();
-        overlay = null;
-        document.body.style.overflow = "";
-        window.removeEventListener("popstate", onPopstate);
-        if (!fromPopstate && history.state?.lightbox) {
-          history.back();
-        }
-      }
-
-      function onPopstate() {
-        closeLightbox(true);
-      }
-
-      function onKeydown(e) {
-        if (e.key === "Escape") closeLightbox();
-      }
-
-      item.addEventListener("click", () => {
-        const img = item.querySelector("img");
-        if (!img) return;
-
-        history.pushState({ lightbox: true }, "");
-
-        overlay = document.createElement("div");
-        overlay.className = "lightbox-overlay";
-        overlay.innerHTML = `
-          <div class="lightbox-content">
-            <img src="${img.src}" alt="${img.alt}" />
-            <button class="lightbox-close" aria-label="Cerrar">&times;</button>
-          </div>
-        `;
-
-        document.body.appendChild(overlay);
-        document.body.style.overflow = "hidden";
-
-        overlay.addEventListener("click", (e) => {
-          if (
-            e.target === overlay ||
-            (e.target as Element).classList.contains("lightbox-close")
-          ) {
-            closeLightbox();
-          }
-        });
-
-        document.addEventListener("keydown", onKeydown);
-        window.addEventListener("popstate", onPopstate);
-      });
-    });
-  }
-
-  initLightbox("#archivo [data-lightbox]");
-</script>
 
 <style>
   .archive {
     padding: 6rem 2rem;
     background: var(--color-bg);
-    overflow: hidden;
   }
 
   .archive-container {
@@ -120,74 +63,30 @@ const { title, description, ctaLabel, ctaHref, images } = text.frontmatter;
     margin: 0 auto;
   }
 
-  .archive-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
   .archive-item {
-    margin: 0;
+    margin: 0 auto;
+    max-width: 820px;
+    background: white;
     border-radius: 8px;
     overflow: hidden;
-    background: white;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-    cursor: pointer;
-    transition:
-      transform 0.2s,
-      box-shadow 0.2s;
-  }
-
-  .archive-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
   }
 
   .archive-item img {
     width: 100%;
-    height: 240px;
+    aspect-ratio: 3 / 2;
+    max-height: 520px;
     object-fit: cover;
     display: block;
   }
 
-  .archive-caption {
-    padding: 1rem 1.25rem;
-  }
-
-  .archive-img-title {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-text);
-  }
-
-  .archive-cta {
-    text-align: center;
-    margin-top: 3rem;
-  }
-
-  .btn {
-    display: inline-block;
-    padding: 0.85rem 1.75rem;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-
-  .btn-primary {
-    background: var(--color-accent-red);
-    color: white;
-  }
-
-  .btn-primary:hover {
-    background: #c4151f;
-    transform: translateY(-1px);
-  }
-
   @media (max-width: 768px) {
-    .archive-grid {
-      grid-template-columns: 1fr;
+    .archive {
+      padding: 4rem 1rem;
+    }
+
+    .archive-item img {
+      aspect-ratio: 4 / 3;
     }
   }
 </style>

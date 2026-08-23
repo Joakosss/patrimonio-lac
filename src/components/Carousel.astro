@@ -161,7 +161,8 @@ const { label = "carrusel" } = Astro.props;
     margin-top: 2rem;
   }
 
-  .dot {
+  /* Los dots se crean por JS, sin scope de Astro: necesitan :global */
+  .carousel-dots :global(.dot) {
     width: 10px;
     height: 10px;
     padding: 0;
@@ -174,11 +175,11 @@ const { label = "carrusel" } = Astro.props;
       transform 0.2s;
   }
 
-  .dot:hover {
+  .carousel-dots :global(.dot:hover) {
     background: #c0c0c0;
   }
 
-  .dot.active {
+  .carousel-dots :global(.dot.active) {
     background: var(--color-accent-red);
     transform: scale(1.25);
   }
