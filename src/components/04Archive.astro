@@ -1,13 +1,11 @@
 ---
-const text = await import("../data/texts/archive.md");
-const { badge, title, description, ctaLabel, ctaHref, images } =
-  text.frontmatter;
+const text = await import("../data/texts/04archive.md");
+const { title, description, ctaLabel, ctaHref, images } = text.frontmatter;
 ---
 
 <section id="archivo" class="archive">
   <div class="archive-container">
     <div class="archive-header">
-      <span class="archive-badge">{badge}</span>
       <h2 class="archive-title">{title}</h2>
       <p class="archive-description">{description}</p>
     </div>
@@ -108,19 +106,6 @@ const { badge, title, description, ctaLabel, ctaHref, images } =
   .archive-header {
     text-align: center;
     margin-bottom: 3rem;
-  }
-
-  .archive-badge {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-accent-yellow);
-    background: rgba(255, 204, 0, 0.15);
-    padding: 0.3rem 0.8rem;
-    border-radius: 4px;
-    margin-bottom: 1.25rem;
   }
 
   .archive-title {

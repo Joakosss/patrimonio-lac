@@ -1,5 +1,5 @@
 ---
-const text = await import("../data/texts/hero.md");
+const text = await import("../data/texts/02hero.md");
 const { tag, title, highlight, subtitle, buttons } = text.frontmatter;
 ---
 
@@ -43,10 +43,12 @@ const { tag, title, highlight, subtitle, buttons } = text.frontmatter;
     inset: 0;
     background: linear-gradient(
       to bottom,
-      rgba(250, 250, 250, 0.3) 0%,
-      rgba(250, 250, 250, 0.8) 50%,
-      rgba(250, 250, 250, 0.8) 50%,
-      rgba(250, 250, 250, 0.3) 100%
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.3) 20%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.7) 70%,
+      rgba(0, 0, 0, 0.6) 90%,
+      rgba(0, 0, 0, 0.4) 100%
     );
     z-index: 1;
   }
@@ -63,7 +65,7 @@ const { tag, title, highlight, subtitle, buttons } = text.frontmatter;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: var(--color-accent-red);
+    color: var(--color-accent-hero);
     margin-bottom: 1.5rem;
   }
 
@@ -72,17 +74,17 @@ const { tag, title, highlight, subtitle, buttons } = text.frontmatter;
     font-weight: 700;
     line-height: 1.1;
     margin-bottom: 1.5rem;
-    color: var(--color-text);
+    color: var(--color-text-hero);
   }
 
   .highlight {
-    color: var(--color-accent-yellow);
+    color: var(--color-accent-hero);
   }
 
   .hero-subtitle {
     font-size: 1.15rem;
     line-height: 1.7;
-    color: var(--color-text-muted);
+    color: var(--color-text-hero);
     margin-bottom: 2.5rem;
   }
 
@@ -115,12 +117,12 @@ const { tag, title, highlight, subtitle, buttons } = text.frontmatter;
 
   .btn-secondary {
     background: transparent;
-    color: var(--color-text);
+    color: var(--color-text-hero);
     border: 1.5px solid var(--color-border);
   }
 
   .btn-secondary:hover {
-    border-color: var(--color-accent-yellow);
-    color: var(--color-accent-yellow);
+    border-color: var(--color-accent-hero);
+    color: var(--color-accent-hero);
   }
 </style>

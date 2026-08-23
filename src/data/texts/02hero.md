@@ -7,7 +7,7 @@ buttons:
   - label: "Ver galería"
     href: "#galeria"
     variant: primary
-  - label: "Próximo libro"
-    href: "#libro"
+  - label: "Publicaciones"
+    href: "#Publicaciones"
     variant: secondary
 ---

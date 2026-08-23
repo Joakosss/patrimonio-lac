@@ -1,12 +1,11 @@
 ---
-const text = await import('../data/texts/mascot.md');
-const { badge, title, description, origin, images, centerImage } = text.frontmatter;
+const text = await import("../data/texts/05mascot.md");
+const { title, description, origin, images, centerImage } = text.frontmatter;
 ---
 
 <section id="mascota" class="mascot">
   <div class="mascot-container">
     <div class="mascot-text">
-      <span class="mascot-badge">{badge}</span>
       <h2 class="mascot-title">{title}</h2>
       <p class="mascot-description">
         {description}
@@ -18,17 +17,14 @@ const { badge, title, description, origin, images, centerImage } = text.frontmat
 
     <div class="mascot-images">
       <div class="mascot-grid">
-        {images.map((img, i) => (
-          <div class={`mascot-img grid-img-${i + 1}`} data-lightbox>
-            <img
-              src={img.src}
-              alt={img.alt}
-              width="600"
-              height="600"
-            />
-            <span class="img-label">{img.label}</span>
-          </div>
-        ))}
+        {
+          images.map((img, i) => (
+            <div class={`mascot-img grid-img-${i + 1}`} data-lightbox>
+              <img src={img.src} alt={img.alt} width="600" height="600" />
+              <span class="img-label">{img.label}</span>
+            </div>
+          ))
+        }
       </div>
       <div class="mascot-img mascot-center" data-lightbox>
         <img
@@ -52,8 +48,8 @@ const { badge, title, description, origin, images, centerImage } = text.frontmat
         if (!overlay) return;
         overlay.remove();
         overlay = null;
-        document.body.style.overflow = '';
-        window.removeEventListener('popstate', onPopstate);
+        document.body.style.overflow = "";
+        window.removeEventListener("popstate", onPopstate);
         if (!fromPopstate && history.state?.lightbox) {
           history.back();
         }
@@ -64,17 +60,17 @@ const { badge, title, description, origin, images, centerImage } = text.frontmat
       }
 
       function onKeydown(e) {
-        if (e.key === 'Escape') closeLightbox();
+        if (e.key === "Escape") closeLightbox();
       }
 
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img');
+      item.addEventListener("click", () => {
+        const img = item.querySelector("img");
         if (!img) return;
 
-        history.pushState({ lightbox: true }, '');
+        history.pushState({ lightbox: true }, "");
 
-        overlay = document.createElement('div');
-        overlay.className = 'lightbox-overlay';
+        overlay = document.createElement("div");
+        overlay.className = "lightbox-overlay";
         overlay.innerHTML = `
           <div class="lightbox-content">
             <img src="${img.src}" alt="${img.alt}" />
@@ -83,21 +79,24 @@ const { badge, title, description, origin, images, centerImage } = text.frontmat
         `;
 
         document.body.appendChild(overlay);
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
 
-        overlay.addEventListener('click', (e) => {
-          if (e.target === overlay || (e.target as Element).classList.contains('lightbox-close')) {
+        overlay.addEventListener("click", (e) => {
+          if (
+            e.target === overlay ||
+            (e.target as Element).classList.contains("lightbox-close")
+          ) {
             closeLightbox();
           }
         });
 
-        document.addEventListener('keydown', onKeydown);
-        window.addEventListener('popstate', onPopstate);
+        document.addEventListener("keydown", onKeydown);
+        window.addEventListener("popstate", onPopstate);
       });
     });
   }
 
-  initLightbox('#mascota [data-lightbox]');
+  initLightbox("#mascota [data-lightbox]");
 </script>
 
 <style>
@@ -114,19 +113,6 @@ const { badge, title, description, origin, images, centerImage } = text.frontmat
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
-  }
-
-  .mascot-badge {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-accent-yellow);
-    background: rgba(255, 204, 0, 0.15);
-    padding: 0.3rem 0.8rem;
-    border-radius: 4px;
-    margin-bottom: 1.25rem;
   }
 
   .mascot-title {
@@ -172,7 +158,9 @@ const { badge, title, description, origin, images, centerImage } = text.frontmat
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
     cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition:
+      transform 0.3s,
+      box-shadow 0.3s;
   }
 
   .mascot-img:hover {
@@ -191,25 +179,33 @@ const { badge, title, description, origin, images, centerImage } = text.frontmat
     transform: rotate(-2deg);
   }
 
-  .grid-img-1:hover { transform: rotate(-2deg) scale(1.05); }
+  .grid-img-1:hover {
+    transform: rotate(-2deg) scale(1.05);
+  }
 
   .grid-img-2 {
     transform: rotate(2deg);
   }
 
-  .grid-img-2:hover { transform: rotate(2deg) scale(1.05); }
+  .grid-img-2:hover {
+    transform: rotate(2deg) scale(1.05);
+  }
 
   .grid-img-3 {
     transform: rotate(1.5deg);
   }
 
-  .grid-img-3:hover { transform: rotate(1.5deg) scale(1.05); }
+  .grid-img-3:hover {
+    transform: rotate(1.5deg) scale(1.05);
+  }
 
   .grid-img-4 {
     transform: rotate(-1.5deg);
   }
 
-  .grid-img-4:hover { transform: rotate(-1.5deg) scale(1.05); }
+  .grid-img-4:hover {
+    transform: rotate(-1.5deg) scale(1.05);
+  }
 
   .mascot-center {
     position: absolute;

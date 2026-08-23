@@ -11,7 +11,4 @@ cards:
   - icon: "✍️"
     title: "Publicación"
     description: "Elaboramos publicaciones y recursos que acercan la historia del liceo a toda la comunidad educativa."
-contactCTA: "¿Tenés información o fotos sobre la historia del liceo?"
-contactLink: "Contactanos →"
-contactEmail: "mailto:tallerhistoria@arrietacanas.edu.uy"
 ---

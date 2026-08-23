@@ -1,6 +1,6 @@
 ---
-const text = await import("../data/texts/instagramZone.md");
-const { badge, title, description, posts } = text.frontmatter;
+const text = await import("../data/texts/07instagramZone.md");
+const { title, description, posts } = text.frontmatter;
 
 function embedHtml(url: string) {
   const link = `${url}?utm_source=ig_embed&utm_campaign=loading`;
@@ -11,7 +11,6 @@ function embedHtml(url: string) {
 <section id="zona-del-libro" class="book-zone">
   <div class="book-zone-container">
     <div class="book-zone-header">
-      <span class="book-zone-badge">{badge}</span>
       <h2 class="book-zone-title">{title}</h2>
       <p class="book-zone-description">{description}</p>
     </div>
@@ -42,19 +41,6 @@ function embedHtml(url: string) {
   .book-zone-header {
     text-align: center;
     margin-bottom: 3rem;
-  }
-
-  .book-zone-badge {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-accent-yellow);
-    background: rgba(255, 204, 0, 0.15);
-    padding: 0.3rem 0.8rem;
-    border-radius: 4px;
-    margin-bottom: 1.25rem;
   }
 
   .book-zone-title {

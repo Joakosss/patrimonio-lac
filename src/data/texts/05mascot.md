@@ -1,5 +1,4 @@
 ---
-badge: "Identidad del taller"
 title: "Tesorito Atlas"
 description: "Tesorito Atlas nació de los bocetos y la creatividad del equipo. Como estudiantes y para estudiantes, creamos esta mascota que nos representa y que acompaña cada uno de nuestros proyectos como el símbolo del Taller de Patrimonio."
 origin: "Cada trazo refleja el espíritu de investigación y la pasión por preservar la historia de nuestro liceo."

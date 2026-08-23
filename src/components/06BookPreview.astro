@@ -1,6 +1,7 @@
 ---
-const text = await import('../data/texts/book.md');
-const { badge, title, authors, description, coverIcon, coverText, meta } = text.frontmatter;
+const text = await import("../data/texts/06book.md");
+const { title, authors, description, coverIcon, coverText, meta } =
+  text.frontmatter;
 ---
 
 <section id="libro" class="book">
@@ -14,17 +15,18 @@ const { badge, title, authors, description, coverIcon, coverText, meta } = text.
       </div>
 
       <div class="book-info">
-        <p class="book-badge">{badge}</p>
         <h2 class="book-title">{title}</h2>
         <p class="book-authors">{authors}</p>
         <p class="book-description">{description}</p>
         <div class="book-meta">
-          {meta.map((item) => (
-            <div class="meta-item">
-              <span class="meta-label">{item.label}</span>
-              <span class="meta-value">{item.value}</span>
-            </div>
-          ))}
+          {
+            meta.map((item) => (
+              <div class="meta-item">
+                <span class="meta-label">{item.label}</span>
+                <span class="meta-value">{item.value}</span>
+              </div>
+            ))
+          }
         </div>
       </div>
     </div>
@@ -52,7 +54,11 @@ const { badge, title, authors, description, coverIcon, coverText, meta } = text.
   .cover-placeholder {
     width: 100%;
     aspect-ratio: 2/3;
-    background: linear-gradient(135deg, var(--color-accent-red) 0%, #b8121b 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-accent-red) 0%,
+      #b8121b 100%
+    );
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -72,19 +78,6 @@ const { badge, title, authors, description, coverIcon, coverText, meta } = text.
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-  }
-
-  .book-badge {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-accent-yellow);
-    background: rgba(255, 204, 0, 0.1);
-    padding: 0.3rem 0.8rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
   }
 
   .book-title {

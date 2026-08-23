@@ -1,5 +1,4 @@
 ---
-badge: "Archivo fotográfico"
 title: "Descubrimientos del Archivo"
 description: "Parte de nuestros hallazgos fotográficos recuperados del archivo del liceo. Cada imagen es una ventana a la historia que nos precede."
 images:

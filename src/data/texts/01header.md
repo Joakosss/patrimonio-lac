@@ -1,17 +1,18 @@
 ---
-name: "Taller de Patrimonio"
-school: "Liceo Luis Arrieta Cañas"
-links:
+logo:
+  text: "Taller de Patrimonio LAC"
+nav:
   - label: "Equipo"
     href: "#equipo"
   - label: "Archivo"
     href: "#archivo"
   - label: "Libro"
     href: "#libro"
+  - label: "Noticias"
+    href: "#noticias"
   - label: "Sobre nosotros"
     href: "#sobre"
   - label: "Contacto"
     href: "#contacto"
-email: "patrimoniolac212@gmail.com"
-copyright: "Todos los derechos reservados."
+instagram: "https://www.instagram.com/patrimonio_lac/"
 ---

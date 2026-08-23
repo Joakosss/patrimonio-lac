@@ -1,6 +1,13 @@
 ---
-const text = await import('../data/texts/about.md');
-const { sectionTitle, sectionSubtitle, cards, contactCTA, contactLink, contactEmail } = text.frontmatter;
+const text = await import("../data/texts/08about.md");
+const {
+  sectionTitle,
+  sectionSubtitle,
+  cards,
+  contactCTA,
+  contactLink,
+  contactEmail,
+} = text.frontmatter;
 ---
 
 <section id="sobre" class="about">
@@ -11,20 +18,15 @@ const { sectionTitle, sectionSubtitle, cards, contactCTA, contactLink, contactEm
     </p>
 
     <div class="about-grid">
-      {cards.map((card) => (
-        <div class="about-card">
-          <div class="card-icon">{card.icon}</div>
-          <h3>{card.title}</h3>
-          <p>{card.description}</p>
-        </div>
-      ))}
-    </div>
-
-    <div class="about-contact">
-      <p>{contactCTA}</p>
-      <a href={contactEmail} class="contact-link">
-        {contactLink}
-      </a>
+      {
+        cards.map((card) => (
+          <div class="about-card">
+            <div class="card-icon">{card.icon}</div>
+            <h3>{card.title}</h3>
+            <p>{card.description}</p>
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>
