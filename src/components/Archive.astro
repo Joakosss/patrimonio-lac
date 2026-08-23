@@ -1,6 +1,7 @@
 ---
-const text = await import('../data/texts/archive.md');
-const { badge, title, description, ctaLabel, ctaHref, images } = text.frontmatter;
+const text = await import("../data/texts/archive.md");
+const { badge, title, description, ctaLabel, ctaHref, images } =
+  text.frontmatter;
 ---
 
 <section id="archivo" class="archive">
@@ -12,24 +13,22 @@ const { badge, title, description, ctaLabel, ctaHref, images } = text.frontmatte
     </div>
 
     <div class="archive-grid">
-      {images.map((img) => (
-        <figure class="archive-item" data-lightbox>
-          <img
-            src={img.src}
-            alt={img.alt}
-            loading="lazy"
-            width="600"
-            height="400"
-          />
-          <figcaption class="archive-caption">
-            <span class="archive-img-title">{img.title}</span>
-          </figcaption>
-        </figure>
-      ))}
-    </div>
-
-    <div class="archive-cta">
-      <a href={ctaHref} class="btn btn-primary">{ctaLabel}</a>
+      {
+        images.map((img) => (
+          <figure class="archive-item" data-lightbox>
+            <img
+              src={img.src}
+              alt={img.alt}
+              loading="lazy"
+              width="600"
+              height="400"
+            />
+            <figcaption class="archive-caption">
+              <span class="archive-img-title">{img.title}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
     </div>
   </div>
 </section>
@@ -43,8 +42,8 @@ const { badge, title, description, ctaLabel, ctaHref, images } = text.frontmatte
         if (!overlay) return;
         overlay.remove();
         overlay = null;
-        document.body.style.overflow = '';
-        window.removeEventListener('popstate', onPopstate);
+        document.body.style.overflow = "";
+        window.removeEventListener("popstate", onPopstate);
         if (!fromPopstate && history.state?.lightbox) {
           history.back();
         }
@@ -55,17 +54,17 @@ const { badge, title, description, ctaLabel, ctaHref, images } = text.frontmatte
       }
 
       function onKeydown(e) {
-        if (e.key === 'Escape') closeLightbox();
+        if (e.key === "Escape") closeLightbox();
       }
 
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img');
+      item.addEventListener("click", () => {
+        const img = item.querySelector("img");
         if (!img) return;
 
-        history.pushState({ lightbox: true }, '');
+        history.pushState({ lightbox: true }, "");
 
-        overlay = document.createElement('div');
-        overlay.className = 'lightbox-overlay';
+        overlay = document.createElement("div");
+        overlay.className = "lightbox-overlay";
         overlay.innerHTML = `
           <div class="lightbox-content">
             <img src="${img.src}" alt="${img.alt}" />
@@ -74,21 +73,24 @@ const { badge, title, description, ctaLabel, ctaHref, images } = text.frontmatte
         `;
 
         document.body.appendChild(overlay);
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
 
-        overlay.addEventListener('click', (e) => {
-          if (e.target === overlay || (e.target as Element).classList.contains('lightbox-close')) {
+        overlay.addEventListener("click", (e) => {
+          if (
+            e.target === overlay ||
+            (e.target as Element).classList.contains("lightbox-close")
+          ) {
             closeLightbox();
           }
         });
 
-        document.addEventListener('keydown', onKeydown);
-        window.addEventListener('popstate', onPopstate);
+        document.addEventListener("keydown", onKeydown);
+        window.addEventListener("popstate", onPopstate);
       });
     });
   }
 
-  initLightbox('#archivo [data-lightbox]');
+  initLightbox("#archivo [data-lightbox]");
 </script>
 
 <style>
@@ -149,7 +151,9 @@ const { badge, title, description, ctaLabel, ctaHref, images } = text.frontmatte
     background: white;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
   }
 
   .archive-item:hover {

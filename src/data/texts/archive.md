@@ -2,8 +2,6 @@
 badge: "Archivo fotográfico"
 title: "Descubrimientos del Archivo"
 description: "Parte de nuestros hallazgos fotográficos recuperados del archivo del liceo. Cada imagen es una ventana a la historia que nos precede."
-ctaLabel: "Explorar Archivo Digital"
-ctaHref: "#"
 images:
   - src: "/images/archivo-01.jpg"
     alt: "Descripción de la imagen de archivo 1"

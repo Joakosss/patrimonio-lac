@@ -8,6 +8,8 @@ nav:
     href: "#archivo"
   - label: "Libro"
     href: "#libro"
+  - label: "Zona del book"
+    href: "#zona-del-libro"
   - label: "Sobre nosotros"
     href: "#sobre"
   - label: "Contacto"
