@@ -35,38 +35,60 @@ const { badge, title, description, ctaLabel, ctaHref, images } = text.frontmatte
 </section>
 
 <script>
-  document.querySelectorAll('#archivo [data-lightbox]').forEach((item) => {
-    item.addEventListener('click', () => {
-      const img = item.querySelector('img');
-      if (!img) return;
+  function initLightbox(selector) {
+    document.querySelectorAll(selector).forEach((item) => {
+      let overlay = null;
 
-      const overlay = document.createElement('div');
-      overlay.className = 'lightbox-overlay';
-      overlay.innerHTML = `
-        <div class="lightbox-content">
-          <img src="${img.src}" alt="${img.alt}" />
-          <button class="lightbox-close" aria-label="Cerrar">&times;</button>
-        </div>
-      `;
-
-      document.body.appendChild(overlay);
-      document.body.style.overflow = 'hidden';
-
-      overlay.addEventListener('click', (e) => {
-        if (e.target === overlay || (e.target as Element).classList.contains('lightbox-close')) {
-          overlay.remove();
-          document.body.style.overflow = '';
+      function closeLightbox(fromPopstate = false) {
+        if (!overlay) return;
+        overlay.remove();
+        overlay = null;
+        document.body.style.overflow = '';
+        window.removeEventListener('popstate', onPopstate);
+        if (!fromPopstate && history.state?.lightbox) {
+          history.back();
         }
-      });
+      }
 
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          overlay.remove();
-          document.body.style.overflow = '';
-        }
+      function onPopstate() {
+        closeLightbox(true);
+      }
+
+      function onKeydown(e) {
+        if (e.key === 'Escape') closeLightbox();
+      }
+
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        if (!img) return;
+
+        history.pushState({ lightbox: true }, '');
+
+        overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        overlay.innerHTML = `
+          <div class="lightbox-content">
+            <img src="${img.src}" alt="${img.alt}" />
+            <button class="lightbox-close" aria-label="Cerrar">&times;</button>
+          </div>
+        `;
+
+        document.body.appendChild(overlay);
+        document.body.style.overflow = 'hidden';
+
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay || (e.target as Element).classList.contains('lightbox-close')) {
+            closeLightbox();
+          }
+        });
+
+        document.addEventListener('keydown', onKeydown);
+        window.addEventListener('popstate', onPopstate);
       });
     });
-  });
+  }
+
+  initLightbox('#archivo [data-lightbox]');
 </script>
 
 <style>

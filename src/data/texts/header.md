@@ -4,8 +4,6 @@ logo:
 nav:
   - label: "Equipo"
     href: "#equipo"
-  - label: "Hallazgos"
-    href: "#hallazgos"
   - label: "Archivo"
     href: "#archivo"
   - label: "Libro"
