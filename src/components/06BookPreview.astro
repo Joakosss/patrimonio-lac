@@ -2,43 +2,67 @@
 import Carousel from "./Carousel.astro";
 
 const text = await import("../data/texts/06book.md");
-const { title, authors, description, coverIcon, coverText, meta, comingSoon } =
-  text.frontmatter;
+const { publications } = text.frontmatter;
 ---
 
 <section id="publicaciones" class="book">
   <div class="book-container">
     <Carousel label="carrusel de publicaciones">
-      <div class="slide">
-        <div class="book-layout">
-          <div class="book-cover">
-            <div class="cover-placeholder">
-              <span class="cover-icon">{coverIcon}</span>
-              <span class="cover-text">{coverText}</span>
+      {
+        publications.map((pub) =>
+          pub.comingSoon ? (
+            <div class="slide slide-soon">
+              <p class="soon-text">{pub.text}</p>
             </div>
-          </div>
+          ) : (
+            <div class="slide">
+              <div class="book-layout">
+                <div class="book-cover">
+                  {pub.portada ? (
+                    <img
+                      src={pub.portada}
+                      alt={`Portada de ${pub.title}`}
+                      class="cover-photo"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div class="cover-placeholder">
+                      <span class="cover-icon">{pub.coverIcon ?? "📖"}</span>
+                      <span class="cover-text">
+                        {pub.coverText ?? "En preparación"}
+                      </span>
+                    </div>
+                  )}
+                </div>
 
-          <div class="book-info">
-            <h2 class="book-title">{title}</h2>
-            <p class="book-authors">{authors}</p>
-            <p class="book-description">{description}</p>
-            <div class="book-meta">
-              {
-                meta.map((item) => (
-                  <div class="meta-item">
-                    <span class="meta-label">{item.label}</span>
-                    <span class="meta-value">{item.value}</span>
+                <div class="book-info">
+                  <h2 class="book-title">{pub.title}</h2>
+                  <p class="book-authors">{pub.authors}</p>
+                  <p class="book-description">{pub.description}</p>
+                  <div class="book-meta">
+                    {pub.meta.map((item) => (
+                      <div class="meta-item">
+                        <span class="meta-label">{item.label}</span>
+                        <span class="meta-value">{item.value}</span>
+                      </div>
+                    ))}
                   </div>
-                ))
-              }
+                  {pub.btn && pub.btnRef && (
+                    <a
+                      href={pub.btnRef}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="book-button"
+                    >
+                      {pub.btn}
+                    </a>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="slide slide-soon">
-        <p class="soon-text">{comingSoon}</p>
-      </div>
+          ),
+        )
+      }
     </Carousel>
   </div>
 </section>
@@ -81,6 +105,15 @@ const { title, authors, description, coverIcon, coverText, meta, comingSoon } =
 
   .cover-icon {
     font-size: 3rem;
+  }
+
+  .cover-photo {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(229, 26, 37, 0.2);
+    display: block;
   }
 
   .cover-text {
@@ -137,6 +170,26 @@ const { title, authors, description, coverIcon, coverText, meta, comingSoon } =
     color: var(--color-text);
   }
 
+  .book-button {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.75rem;
+    background: var(--color-accent-red);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition:
+      background 0.2s,
+      transform 0.2s;
+  }
+
+  .book-button:hover {
+    background: #b8121b;
+    transform: translateY(-2px);
+  }
+
   /* Diapositiva 2: próximamente */
   .slide-soon {
     display: flex;
@@ -176,8 +229,20 @@ const { title, authors, description, coverIcon, coverText, meta, comingSoon } =
       margin: 0 auto;
     }
 
+    .cover-photo {
+      max-width: 250px;
+      margin: 0 auto;
+    }
+
     .book-meta {
       justify-content: center;
+    }
+
+    .book-info .book-button {
+      display: block;
+      max-width: max-content;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .slide-soon {
