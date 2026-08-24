@@ -16,7 +16,7 @@ const { title, description, images } = text.frontmatter;
       {
         images.map((img, i) => (
           <div class="slide">
-            <figure class="archive-item">
+            <figure class="archive-item" data-lightbox-archive>
               <img
                 src={img.src}
                 alt={img.alt}
@@ -31,6 +31,66 @@ const { title, description, images } = text.frontmatter;
     </Carousel>
   </div>
 </section>
+
+<script>
+  function initLightbox(selector) {
+    document.querySelectorAll(selector).forEach((item) => {
+      let overlay = null;
+
+      function closeLightbox(fromPopstate = false) {
+        if (!overlay) return;
+        overlay.remove();
+        overlay = null;
+        document.body.style.overflow = "";
+        window.removeEventListener("popstate", onPopstate);
+        if (!fromPopstate && history.state?.lightbox) {
+          history.back();
+        }
+      }
+
+      function onPopstate() {
+        closeLightbox(true);
+      }
+
+      function onKeydown(e) {
+        if (e.key === "Escape") closeLightbox();
+      }
+
+      item.addEventListener("click", () => {
+        const img = item.querySelector("img");
+        if (!img) return;
+
+        history.pushState({ lightbox: true }, "");
+
+        overlay = document.createElement("div");
+        overlay.className = "lightbox-overlay";
+        overlay.innerHTML = `
+          <div class="lightbox-content">
+            <img src="${img.src}" alt="${img.alt}" />
+            <button class="lightbox-close" aria-label="Cerrar">&times;</button>
+          </div>
+        `;
+
+        document.body.appendChild(overlay);
+        document.body.style.overflow = "hidden";
+
+        overlay.addEventListener("click", (e) => {
+          if (
+            e.target === overlay ||
+            (e.target as Element).classList.contains("lightbox-close")
+          ) {
+            closeLightbox();
+          }
+        });
+
+        document.addEventListener("keydown", onKeydown);
+        window.addEventListener("popstate", onPopstate);
+      });
+    });
+  }
+
+  initLightbox("[data-lightbox-archive]");
+</script>
 
 <style>
   .archive {
@@ -70,6 +130,7 @@ const { title, description, images } = text.frontmatter;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
   }
 
   .archive-item img {
