@@ -1,7 +1,21 @@
 ---
-import photos from "../data/photos.json";
+const photoModules = import.meta.glob<{ frontmatter: Photo }>(
+  "../data/photos/*.md",
+  { eager: true },
+);
+const teamPhotos = Object.values(photoModules)
+  .map((mod) => mod.frontmatter)
+  .filter((p) => p.category === "equipo")
+  .sort((a, b) => a.order - b.order);
 
-const teamPhotos = photos.filter((p) => p.category === "equipo");
+interface Photo {
+  title: string;
+  src: string;
+  alt: string;
+  year?: string;
+  category?: string;
+  order: number;
+}
 ---
 
 <section id="equipo" class="team">

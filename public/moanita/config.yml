@@ -1,0 +1,353 @@
+# Configuración de Sveltia CMS
+# El panel vive en /moanita/ (nombre no obvio a propósito).
+# Autenticación: botón "Sign in with Token" con un Personal Access Token de GitHub
+# (scope clásico `repo`, o fine-grained con Contents: Read and write).
+
+backend:
+  name: github
+  repo: Joakosss/patrimonio-lac
+  branch: cms # TEMPORAL para pruebas; cambiar a main antes de fusionar
+
+site_url: https://tallerhistoria-lac.vercel.app
+
+media_folder: public/images # las imágenes subidas desde el CMS van aquí
+public_folder: /images # y se sirven desde esta ruta
+
+collections:
+  # ============================================================
+  # SECCIONES: cada sección única de la landing page
+  # ============================================================
+  - name: secciones
+    label: Secciones del sitio
+    label_singular: sección
+    files:
+      # --------------------------------------------------------
+      - name: header
+        label: 01 · Encabezado y menú
+        file: src/data/texts/01header.md
+        fields:
+          - name: logo
+            label: Logo
+            widget: object
+            collapsed: false
+            fields:
+              - name: text
+                label: Texto completo
+                widget: string
+              - name: shortText
+                label: Texto corto (vista móvil)
+                widget: string
+              - name: image
+                label: Imagen del logo
+                widget: image
+          - name: nav
+            label: Enlaces del menú
+            widget: list
+            fields:
+              - name: label
+                label: Etiqueta
+                widget: string
+              - name: href
+                label: "Destino (ej: #equipo)"
+                widget: string
+          - name: instagram
+            label: URL de Instagram
+            widget: string
+
+      # --------------------------------------------------------
+      - name: hero
+        label: 02 · Portada (Hero)
+        file: src/data/texts/02hero.md
+        fields:
+          - name: tag
+            label: Etiqueta superior
+            widget: string
+          - name: title
+            label: Título (parte normal)
+            widget: string
+          - name: highlight
+            label: Palabra destacada
+            widget: string
+          - name: message
+            label: Mensaje corto
+            widget: string
+          - name: subtitle
+            label: Subtítulo
+            widget: text
+          - name: buttons
+            label: Botones
+            widget: list
+            fields:
+              - name: label
+                label: Texto
+                widget: string
+              - name: href
+                label: Destino
+                widget: string
+              - name: variant
+                label: Estilo
+                widget: select
+                options: [primary, secondary]
+                default: primary
+
+      # --------------------------------------------------------
+      - name: archivo
+        label: 03 · Archivo fotográfico
+        file: src/data/texts/04archive.md
+        fields:
+          - name: title
+            label: Título de la sección
+            widget: string
+          - name: description
+            label: Descripción
+            widget: text
+          - name: images
+            label: Imágenes del archivo
+            widget: list
+            fields:
+              - name: src
+                label: Imagen
+                widget: image
+              - name: alt
+                label: Descripción alternativa (alt)
+                widget: string
+              - name: title
+                label: Título visible
+                widget: string
+
+      # --------------------------------------------------------
+      - name: mascota
+        label: 04 · Mascota
+        file: src/data/texts/05mascot.md
+        fields:
+          - name: title
+            label: Nombre de la mascota
+            widget: string
+          - name: description
+            label: Descripción
+            widget: text
+          - name: origin
+            label: Origen / historia
+            widget: text
+          - name: centerImage
+            label: Imagen central (boceto)
+            widget: object
+            fields:
+              - name: src
+                label: Imagen
+                widget: image
+              - name: alt
+                label: Descripción alternativa
+                widget: string
+              - name: label
+                label: Etiqueta visible
+                widget: string
+          - name: images
+            label: Versiones de la mascota
+            widget: list
+            fields:
+              - name: src
+                label: Imagen
+                widget: image
+              - name: alt
+                label: Descripción alternativa
+                widget: string
+              - name: label
+                label: Etiqueta visible
+                widget: string
+
+      # --------------------------------------------------------
+      - name: publicaciones
+        label: 05 · Publicaciones (libros)
+        file: src/data/texts/06book.md
+        fields:
+          - name: publications
+            label: Libros
+            widget: list
+            fields:
+              - name: title
+                label: Título
+                widget: string
+              - name: authors
+                label: Autores
+                widget: string
+              - name: description
+                label: Descripción
+                widget: text
+              - name: coverIcon
+                label: Ícono de portada (emoji)
+                widget: string
+              - name: coverText
+                label: Texto de portada
+                widget: string
+              - name: portada
+                label: Imagen de portada (opcional)
+                widget: image
+                required: false
+              - name: meta
+                label: Metadatos (estado, fechas…)
+                widget: list
+                fields:
+                  - name: label
+                    label: Etiqueta
+                    widget: string
+                  - name: value
+                    label: Valor
+                    widget: string
+              - name: btn
+                label: Texto del botón (opcional)
+                widget: string
+                required: false
+              - name: btnRef
+                label: Enlace del botón (opcional)
+                widget: string
+                required: false
+
+      # --------------------------------------------------------
+      - name: noticias
+        label: 06 · Noticias (Instagram)
+        file: src/data/texts/07instagramZone.md
+        fields:
+          - name: title
+            label: Título de la sección
+            widget: string
+          - name: description
+            label: Descripción
+            widget: string
+          - name: posts
+            label: Publicaciones
+            widget: list
+            fields:
+              - name: url
+                label: URL del post de Instagram
+                widget: string
+
+      # --------------------------------------------------------
+      - name: nosotros
+        label: 07 · Nosotros
+        file: src/data/texts/08about.md
+        fields:
+          - name: sectionTitle
+            label: Título de la sección
+            widget: string
+          - name: sectionSubtitle
+            label: Subtítulo
+            widget: string
+          - name: cards
+            label: Tarjetas
+            widget: list
+            fields:
+              - name: icon
+                label: Ícono (emoji)
+                widget: string
+              - name: title
+                label: Título
+                widget: string
+              - name: description
+                label: Descripción
+                widget: text
+
+      # --------------------------------------------------------
+      - name: contacto
+        label: 08 · Contacto
+        file: src/data/texts/09contact.md
+        fields:
+          - name: sectionTitle
+            label: Título de la sección
+            widget: string
+          - name: sectionSubtitle
+            label: Subtítulo
+            widget: text
+          - name: cards
+            label: Tarjetas de contacto
+            widget: list
+            fields:
+              - name: icon
+                label: Ícono (emoji)
+                widget: string
+              - name: title
+                label: Título
+                widget: string
+              - name: detail
+                label: Detalle (admite varias líneas)
+                widget: text
+              - name: link
+                label: Texto del enlace
+                widget: string
+              - name: href
+                label: URL del enlace
+                widget: string
+
+      # --------------------------------------------------------
+      - name: footer
+        label: 09 · Pie de página
+        file: src/data/texts/10footer.md
+        fields:
+          - name: name
+            label: Nombre del taller
+            widget: string
+          - name: school
+            label: Nombre del liceo
+            widget: string
+          - name: links
+            label: Enlaces
+            widget: list
+            fields:
+              - name: label
+                label: Etiqueta
+                widget: string
+              - name: href
+                label: Destino
+                widget: string
+          - name: email
+            label: Email
+            widget: string
+          - name: instagram
+            label: Instagram
+            widget: string
+          - name: copyright
+            label: Texto de derechos
+            widget: string
+
+  # ============================================================
+  # FOTOGRAFÍAS DEL TALLER: galería de "Nuestro Equipo"
+  # Una entrada por foto; el orden lo controla el campo "order"
+  # ============================================================
+  - name: fotografias
+    label: Fotografías del taller
+    label_singular: fotografía
+    folder: src/data/photos
+    create: true
+    identifier_field: title
+    summary: "{{order}}. {{title}} ({{year}})"
+    sortable_fields: [order, title, year]
+    view_filters:
+      - label: Equipo
+        field: category
+        pattern: equipo
+    fields:
+      - name: title
+        label: Título
+        widget: string
+      - name: src
+        label: Foto
+        widget: image
+      - name: alt
+        label: Descripción alternativa (alt)
+        widget: string
+        required: false
+      - name: year
+        label: Año
+        widget: string
+        required: false
+      - name: category
+        label: Categoría
+        widget: select
+        options: [equipo]
+        default: equipo
+      - name: order
+        label: Orden de aparición
+        widget: number
+        value_type: int
+        min: 1
+        default: 100
