@@ -6,7 +6,7 @@
 backend:
   name: github
   repo: Joakosss/patrimonio-lac
-  branch: cms # TEMPORAL para pruebas; cambiar a main antes de fusionar
+  branch: main # TEMPORAL para pruebas; cambiar a main antes de fusionar
 
 site_url: https://tallerhistoria-lac.vercel.app
 
